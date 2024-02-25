@@ -31,4 +31,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by GitHub, no need to create a new one
-        publish_dir: ./build  # Specify the directory of your build artifacts. For React, it's typically './build'
+        publish_dir: ./dist  # Specify the directory of your build artifacts. For React, it's typically './build'
