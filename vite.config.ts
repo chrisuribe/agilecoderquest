@@ -8,7 +8,7 @@ const base = process.env.NODE_ENV === 'production' ? '/agilecoderquest/' : '/';
 export default defineConfig({
   base,
   plugins: [react()],
-  // build: {
-  //   outDir: 'build', // Set the output directory to 'build'
-  // },
+  build: {
+    outDir: 'build', // Set the output directory to 'build'
+  },
 })
