@@ -1,13 +1,12 @@
 name: Build and Deploy
-on:
-  push:
-    branches:
-      - main  # Set this to your default branch
+on: [push]
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
+    - name: Checkout Repository 🛎️
       uses: actions/checkout@v3
 
     - name: Install Node.js
@@ -16,7 +15,7 @@ jobs:
         node-version: '20' # Specify the Node.js version you want to use
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     - name: Build React project
       run: npm run build
