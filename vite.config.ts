@@ -6,6 +6,7 @@ const base = process.env.NODE_ENV === 'production' ? '/agilecoderquest/' : '/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   plugins: [react()],
   build: {
     outDir: 'build', // Set the output directory to 'build'
