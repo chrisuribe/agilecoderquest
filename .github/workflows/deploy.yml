@@ -1,39 +1,68 @@
 name: Build and Deploy
-on: [push]
-permissions:
-  contents: write
+
+on:
+  push:
+    branches:
+      - main
+
+# permissions:
+#   contents: write
 jobs:
-  build-and-deploy:
+  build:
+    name: Build Ubuntu latest
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout Repository 🛎️
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
-    - name: Install Node.js
-      uses: actions/setup-node@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: '20' # Specify the Node.js version you want to use
 
     - name: Install Dependencies
       run: npm ci
 
-    - name: setup identity
-      run: |
-        git config --global user.email "you@example.com"
-        git config --global user.name "Your Name"
-
     - name: Build React project
-      run: npm run deploy
+      run: npm run build
 
     - name: Copy CNAME to Build Folder
       run: cp CNAME dist/CNAME  # Copy the CNAME file to the build directory (dist)
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.5.0
+    - name: Upload production-ready build files
+      uses: actions/upload-artifact@v3
       with:
-        branch: gh-pages  # The branch the action should deploy to.
-        folder: dist      # The folder the action should deploy.
-        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically creates this secret to authenticate in your workflow.
+        name: production-files
+        path: ./dist
+
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+    # - name: Deploy to GitHub Pages
+    #   uses: JamesIves/github-pages-deploy-action@v4.5.0
+            
+    #   with:
+    #     branch: gh-pages  # The branch the action should deploy to.
+    #     folder: dist      # The folder the action should deploy.
+    #     token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically creates this secret to authenticate in your workflow.
 
 
     # - name: Deploy to GitHub Pages
