@@ -17,6 +17,11 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
+    - name: setup identity
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+
     - name: Build React project
       run: npm run deploy
 
