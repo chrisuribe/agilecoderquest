@@ -18,7 +18,7 @@ jobs:
       run: npm ci
 
     - name: Build React project
-      run: npm run build
+      run: npm run deploy
 
     - name: Copy CNAME to Build Folder
       run: cp CNAME dist/CNAME  # Copy the CNAME file to the build directory (dist)
