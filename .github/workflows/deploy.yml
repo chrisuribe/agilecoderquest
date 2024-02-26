@@ -42,7 +42,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      actions: read
+      contents: write  # Grant write permissions to contents
     if: github.ref == 'refs/heads/main'
 
     steps:
