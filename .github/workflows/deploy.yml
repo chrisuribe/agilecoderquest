@@ -21,7 +21,7 @@ jobs:
       run: npm run build
 
     - name: Copy CNAME to Build Folder
-      run: cp CNAME build/CNAME  # Copy the CNAME file to the build directory
+      run: cp CNAME dist/CNAME  # Copy the CNAME file to the build directory (dist)
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.5.0
