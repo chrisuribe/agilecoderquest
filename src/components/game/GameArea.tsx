@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import TileHolder from './TileHolder';
-import useWords from '../../hooks/useWords';
+// import useWords from '../../hooks/useWords';
 
 const GameArea = () => {
-  const { words } = useWords();
-  const [currentLetters, setCurrentLetters] = useState([
+  // const { words } = useWords();
+  const [currentLetters] = useState([
     'a',
     'a',
     'b',

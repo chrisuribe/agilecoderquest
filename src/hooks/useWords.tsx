@@ -55,7 +55,7 @@ const useWords = () => {
     'duck',
     'chicken',
   ];
-  const [words, setWords] = useState<string[]>(friendlyWords);
+  const [words] = useState<string[]>(friendlyWords);
 
   return { words };
 };
