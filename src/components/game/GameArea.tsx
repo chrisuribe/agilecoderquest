@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TileHolder from './TileHolder';
+import Timer from './Timer';
 // import useWords from '../../hooks/useWords';
 
 const GameArea = () => {
@@ -45,8 +46,17 @@ const GameArea = () => {
         <div>Menu ≡</div>
         <div>Round: 1</div>
         <div>Score: 0</div>
-        <div>Time: 03:30</div>
-        <div>Pause Button</div>
+        <Timer
+          timeIsUp={function (): void {
+            console.log('Outta time!');
+          }}
+          pausePressed={function (isRunning: boolean): void {
+            console.log(
+              'Pause button pressed! Is app currently running?',
+              isRunning,
+            );
+          }}
+        ></Timer>
       </div>
 
       {/* BOARD AREA - this is where completed words, bonus letters, and empty letter slots will go */}
