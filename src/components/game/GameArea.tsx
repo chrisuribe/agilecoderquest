@@ -109,13 +109,43 @@ const GameArea = () => {
           width: '100%',
         }}
       >
-        <ButtonGreen>
-          <Clear fontSize="large" />
-        </ButtonGreen>
-        <div> screen /_______________________\</div>
-        <ButtonGreen>
-          <Replay fontSize="large" />
-        </ButtonGreen>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <ButtonGreen>
+            <Clear fontSize="large" />
+          </ButtonGreen>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: '#23004c',
+            borderRadius: '5px',
+            padding: '20px',
+            fontWeight: '900',
+            fontSize: 'xx-large',
+            margin: '10px',
+            color: 'aliceblue',
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            textAlign: 'center',
+            width: '50vw',
+          }}
+        >
+          word
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <ButtonGreen>
+            <Replay fontSize="large" />
+          </ButtonGreen>
+        </div>
       </div>
 
       {/* TILE HOLDER - This component will hold the tiles. When a letter is sellected a callback function will be called. if letters are added or removed, then we just updated  */}
