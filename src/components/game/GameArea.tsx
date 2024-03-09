@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TileHolder from './TileHolder';
 import Timer from './Timer';
+import Menu from './Menu';
 // import useWords from '../../hooks/useWords';
 
 const GameArea = () => {
@@ -39,13 +40,30 @@ const GameArea = () => {
         style={{
           display: 'flex',
           justifyContent: 'space-around',
-          width: '100%',
+          alignItems: 'center',
+          width: '90%',
           margin: '20px',
         }}
       >
-        <div>Menu ≡</div>
-        <div>Round: 1</div>
-        <div>Score: 0</div>
+        <Menu />
+        <div
+          style={{
+            fontSize: 'x-large',
+            color: 'white',
+            fontWeight: 'bolder',
+          }}
+        >
+          Round: <span style={{ color: 'orange' }}>1</span>
+        </div>
+        <div
+          style={{
+            fontSize: 'x-large',
+            color: 'white',
+            fontWeight: 'bolder',
+          }}
+        >
+          Score: <span style={{ color: 'orange' }}>0</span>
+        </div>
         <Timer
           timeIsUp={function (): void {
             console.log('Outta time!');

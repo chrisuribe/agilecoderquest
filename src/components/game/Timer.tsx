@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { formatSeconds } from '../../utils';
 import { Button } from '@mui/material';
 import PauseIcon from '@mui/icons-material/Pause';
+import ButtonGreen from '../ButtonGreen';
 
 interface Props {
   // these are callback functions that will be called when time is up or when the pause button is pressed.
@@ -45,10 +46,19 @@ const Timer = forwardRef<TimerHandle, Props>(
 
     return (
       <>
-        <div>Time: {formatSeconds(time)}</div>
-        <Button onClick={handlePausePressed}>
+        <div
+          style={{
+            fontSize: 'x-large',
+            color: 'white',
+            fontWeight: 'bolder',
+          }}
+        >
+          Time: <span style={{ color: 'orange' }}>{formatSeconds(time)}</span>
+        </div>
+
+        <ButtonGreen onClick={handlePausePressed}>
           <PauseIcon />
-        </Button>
+        </ButtonGreen>
       </>
     );
   },
