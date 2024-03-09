@@ -2,6 +2,8 @@ import { useState } from 'react';
 import TileHolder from './TileHolder';
 import Timer from './Timer';
 import Menu from './Menu';
+import { Clear, Replay, Shuffle } from '@mui/icons-material';
+import ButtonGreen from '../ButtonGreen';
 // import useWords from '../../hooks/useWords';
 
 const GameArea = () => {
@@ -107,9 +109,13 @@ const GameArea = () => {
           width: '100%',
         }}
       >
-        <div>clear screen button</div>
+        <ButtonGreen>
+          <Clear fontSize="large" />
+        </ButtonGreen>
         <div> screen /_______________________\</div>
-        <div>return letter button</div>
+        <ButtonGreen>
+          <Replay fontSize="large" />
+        </ButtonGreen>
       </div>
 
       {/* TILE HOLDER - This component will hold the tiles. When a letter is sellected a callback function will be called. if letters are added or removed, then we just updated  */}
@@ -129,13 +135,17 @@ const GameArea = () => {
           margin: '20px',
         }}
       >
-        <div style={{ flex: 1, marginLeft: '20px' }}>shuffle tiles button </div>
+        <div style={{ flex: 1, marginLeft: '20px' }}>
+          <ButtonGreen>
+            <Shuffle fontSize="large" />
+          </ButtonGreen>{' '}
+        </div>
         <div
           style={{
             flex: 2,
           }}
         >
-          enter word button
+          <ButtonGreen>Enter</ButtonGreen>
         </div>
       </div>
     </div>

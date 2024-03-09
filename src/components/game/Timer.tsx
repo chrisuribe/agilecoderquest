@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { formatSeconds } from '../../utils';
-import { Button } from '@mui/material';
 import PauseIcon from '@mui/icons-material/Pause';
 import ButtonGreen from '../ButtonGreen';
 
@@ -57,7 +56,7 @@ const Timer = forwardRef<TimerHandle, Props>(
         </div>
 
         <ButtonGreen onClick={handlePausePressed}>
-          <PauseIcon />
+          <PauseIcon fontSize="large" />
         </ButtonGreen>
       </>
     );
