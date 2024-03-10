@@ -1,7 +1,12 @@
 import { useState } from 'react';
+import { LetterInterface } from '../interfaces';
 
 const useWords = () => {
   // TODO: get words using WordNik
+
+  //let processedWords: LetterInterface[][];
+
+  // const [allWords, setAllWords] = useState<LetterInterface[][]>(processedWords);
 
   const friendlyWords = [
     'cat',
@@ -55,9 +60,30 @@ const useWords = () => {
     'duck',
     'chicken',
   ];
-  const [words] = useState<string[]>(friendlyWords);
 
-  return { words };
+  const defaultWords: LetterInterface[][] = friendlyWords
+    .slice(0, 10)
+    .map((word) => {
+      return word.split('').map((letter) => {
+        return { letter, type: 'blank' };
+      });
+    });
+
+  const [words, setWords] = useState<LetterInterface[][]>(defaultWords);
+
+  const refreshWords = () => {
+    const refreshedWords: LetterInterface[][] = friendlyWords
+      .slice(11, 21)
+      .map((word) => {
+        return word.split('').map((letter) => {
+          return { letter, type: 'blank' };
+        });
+      });
+
+    setWords(refreshedWords);
+  };
+
+  return { words, refreshWords };
 };
 
 export default useWords;

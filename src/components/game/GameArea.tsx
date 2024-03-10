@@ -1,25 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TileHolder from './TileHolder';
 import Timer from './Timer';
 import Menu from './Menu';
 import { Clear, Replay, Shuffle } from '@mui/icons-material';
 import ButtonGreen from '../ButtonGreen';
-// import useWords from '../../hooks/useWords';
+import Information from './Information';
+import WordBoard from './WordBoard';
+
+import useWords from '../../hooks/useWords';
+import { getLetters, removeOneLetter } from '../../utils';
 
 const GameArea = () => {
-  // const { words } = useWords();
-  const [currentLetters] = useState([
-    'a',
-    'a',
-    'b',
-    'c',
-    'c',
-    'd',
-    'd',
-    'd',
-    'd',
-    'e',
-  ]);
+  const { words } = useWords();
+  const [boardWords, setBoardWords] = useState(words);
+  const [boardLetters, setBoardLetters] = useState(getLetters(boardWords));
+  const [displayText, setDisplayText] = useState('');
+
+  useEffect(() => {
+    setBoardWords(words);
+  }, [words]);
+
   return (
     <div
       style={{
@@ -34,9 +34,6 @@ const GameArea = () => {
         alignItems: 'center',
       }}
     >
-      {/* All words:
-        <DisplayWords words={words} /> */}
-
       {/* HEADER AREA - This is the area where the menu, round, score, and coundown timer component will go */}
       <div
         style={{
@@ -79,28 +76,9 @@ const GameArea = () => {
         ></Timer>
       </div>
 
-      {/* BOARD AREA - this is where completed words, bonus letters, and empty letter slots will go */}
-      <div
-        style={{
-          display: 'flex',
-          gap: '20px',
-          fontSize: 'xx-large',
-        }}
-      >
-        <div>
-          <div>☐☐☐</div>
-          <div>☐☐☐</div>
-          <div>☐☐☐☐</div>
-        </div>
-        <div>
-          <div>☐☐☐☐</div>
-          <div>T☐☐☐</div>
-          <div>A☐☐☐☐</div>
-        </div>
-      </div>
+      <WordBoard words={boardWords} />
 
-      {/* Round Progress Meter - This is where we will show how much progress is needed to get to the next round.  */}
-      <div> 25% - 50% - 75% - 100% - Complete </div>
+      <Information />
 
       <div
         style={{
@@ -134,7 +112,7 @@ const GameArea = () => {
             width: '50vw',
           }}
         >
-          word
+          {displayText}
         </div>
         <div
           style={{
@@ -151,9 +129,10 @@ const GameArea = () => {
       {/* TILE HOLDER - This component will hold the tiles. When a letter is sellected a callback function will be called. if letters are added or removed, then we just updated  */}
       <div className="tile-holder">
         <TileHolder
-          letters={currentLetters}
+          letters={boardLetters}
           onLetterSelect={function (letter: string): void {
-            console.log('selected: ' + letter);
+            setDisplayText(displayText + letter);
+            setBoardLetters(removeOneLetter(boardLetters, letter));
           }}
         />
       </div>
