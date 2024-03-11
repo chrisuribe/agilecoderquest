@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { LegacyRef, ReactNode, useRef } from 'react';
 import Draggable from 'react-draggable';
 
 interface Props {
@@ -74,6 +74,7 @@ const MakeDraggable = ({ children }: Props) => {
   // const dragHandlers = { onStart, onStop };
 
   // return <Draggable {...dragHandlers}>{children}</Draggable>;
+
   return <Draggable>{children}</Draggable>;
 };
 

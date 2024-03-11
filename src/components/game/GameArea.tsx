@@ -9,6 +9,7 @@ import WordBoard from './WordBoard';
 
 import useWords from '../../hooks/useWords';
 import { getLetters, removeOneLetter } from '../../utils';
+import ReturnLetterButton from './ReturnButton';
 
 const GameArea = () => {
   const { words } = useWords();
@@ -19,6 +20,52 @@ const GameArea = () => {
   useEffect(() => {
     setBoardWords(words);
   }, [words]);
+
+  const handleLetterReturnButton = () => {
+    const lastDisplayLetter =
+      displayText.length === 0 ? null : displayText[displayText.length - 1];
+    if (lastDisplayLetter) {
+      // add last displayText letter to boardLetters
+      setBoardLetters([...boardLetters, lastDisplayLetter]);
+      // remove last letter from displayText
+      setDisplayText(displayText.slice(0, displayText.length - 1));
+    }
+  };
+
+  const handleAllLettersReturnButton = () => {
+    if (displayText.length !== 0) {
+      // add last displayText letter to boardLetters
+      setBoardLetters([...boardLetters, ...displayText.split('')]);
+      // remove last letter from displayText
+      setDisplayText('');
+    }
+  };
+
+  const handleWordEnterButton = () => {
+    const stringWordsFromBoardWords = boardWords.map((word) =>
+      word.map((w) => w.letter).join(''),
+    );
+
+    const validWordSubmissionIndex =
+      stringWordsFromBoardWords.indexOf(displayText);
+
+    if (validWordSubmissionIndex >= 0) {
+      // update boardWords by updating guessed word's letter type
+      const newBoardWords = [...boardWords];
+      newBoardWords.forEach((bw) => {
+        const combinedWord = bw.map((l) => l.letter).join('');
+        if (combinedWord === displayText) {
+          bw.forEach((l) => (l.type = 'guessed'));
+        }
+      });
+      setBoardWords(newBoardWords);
+
+      // remove from displayText
+      setDisplayText('');
+    } else {
+      // TODO: turn display text red for 3 seconds and back and forth wiggle to say no.
+    }
+  };
 
   return (
     <div
@@ -93,7 +140,7 @@ const GameArea = () => {
             alignItems: 'center',
           }}
         >
-          <ButtonGreen>
+          <ButtonGreen onClick={handleAllLettersReturnButton}>
             <Clear fontSize="large" />
           </ButtonGreen>
         </div>
@@ -120,9 +167,7 @@ const GameArea = () => {
             alignItems: 'center',
           }}
         >
-          <ButtonGreen>
-            <Replay fontSize="large" />
-          </ButtonGreen>
+          <ReturnLetterButton onClick={handleLetterReturnButton} />
         </div>
       </div>
 
@@ -154,7 +199,7 @@ const GameArea = () => {
             flex: 2,
           }}
         >
-          <ButtonGreen>Enter</ButtonGreen>
+          <ButtonGreen onClick={handleWordEnterButton}>Enter</ButtonGreen>
         </div>
       </div>
     </div>
