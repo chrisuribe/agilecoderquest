@@ -1,4 +1,4 @@
-import { LegacyRef, ReactNode, useRef } from 'react';
+import { ReactNode } from 'react';
 import Draggable from 'react-draggable';
 
 interface Props {

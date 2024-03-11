@@ -1,8 +1,6 @@
 import { Button } from '@mui/material';
 import getLetterPoints from '../../utils/getLetterPoints';
 import MakeDraggable from '../MakeDraggable';
-import { LegacyRef, useRef } from 'react';
-import { LegacyCharacterEncoding } from 'crypto';
 
 interface Props {
   letters: string[];

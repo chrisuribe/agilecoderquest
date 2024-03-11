@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import TileHolder from './TileHolder';
 import Timer from './Timer';
 import Menu from './Menu';
-import { Clear, Replay, Shuffle } from '@mui/icons-material';
+import { Clear, Shuffle } from '@mui/icons-material';
 import ButtonGreen from '../ButtonGreen';
 import Information from './Information';
 import WordBoard from './WordBoard';
