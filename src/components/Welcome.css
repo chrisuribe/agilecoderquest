@@ -43,8 +43,10 @@ a:hover {
 }
 
 .form-container {
-  max-width: 450px;
-  margin: 0 auto;
+    margin: auto;
+    
+    border: 3px solid #73AD21;
+    padding: 10px;
 }
 
 .form-body {
@@ -118,7 +120,7 @@ a:hover {
 }
 
 .social-login ul li a:hover {
-  background-color: #fff199;
+  background-color: #f4f4f4;
   color: #0e090e;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
