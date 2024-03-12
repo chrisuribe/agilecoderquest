@@ -23,14 +23,9 @@ a:hover {
 }
 
 body {
-<<<<<<< Updated upstream
-  margin: 0;
-  place-items: center;
-=======
   display: flex;
   justify-content: center;
   align-items: center;
->>>>>>> Stashed changes
   min-width: 320px;
   min-height: 100vh;
   
