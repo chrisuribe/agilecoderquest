@@ -96,24 +96,26 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
                   </span>
                 </span>
               </Button>
-              <span
-                style={{
-                  fontSize: 'small',
-                  position: 'absolute', // Changed to absolute
-                  bottom: '-4px', // Align to the bottom
-                  right: '-5px', // Align to the right
-                  background: 'red', // Circle's background color
-                  borderRadius: '50%', // Creates a circular shape
-                  width: '20px', // Width of the circle
-                  height: '20px', // Height of the circle (same as width for a perfect circle)
-                  color: 'white', // Letter color
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <sub>{l.available}</sub>
-              </span>
+              {l.available > 1 && (
+                <span
+                  style={{
+                    fontSize: 'small',
+                    position: 'absolute', // Changed to absolute
+                    bottom: '-4px', // Align to the bottom
+                    right: '-5px', // Align to the right
+                    background: 'red', // Circle's background color
+                    borderRadius: '50%', // Creates a circular shape
+                    width: '20px', // Width of the circle
+                    height: '20px', // Height of the circle (same as width for a perfect circle)
+                    color: 'white', // Letter color
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <sub>{l.available}</sub>
+                </span>
+              )}
             </div>
           </MakeDraggable>
         </>
