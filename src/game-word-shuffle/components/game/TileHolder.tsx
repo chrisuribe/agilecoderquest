@@ -43,7 +43,7 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
   const holderTiles = lettersToHolderTiles(letters);
 
   const soundUrl =
-    'src/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/448080__breviceps__wet-click.wav';
+    'src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/448080__breviceps__wet-click.wav';
 
   const playSound = () => {
     const audio = new Audio(soundUrl);

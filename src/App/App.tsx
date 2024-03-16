@@ -1,7 +1,7 @@
 import './App.css';
+import Footer from '../components/footer/Footer';
+import GameArea from '../game-word-shuffle/components/game/GameArea';
 // import Welcome from './components/Welcome';
-import Footer from './components/Footer';
-import GameArea from './components/game/GameArea';
 
 function App() {
   return (
