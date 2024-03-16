@@ -76,7 +76,7 @@ const useWords = () => {
       .slice(11, 21)
       .map((word) => {
         return word.split('').map((letter) => {
-          return { letter, type: 'blank' };
+          return { letter, type: 'bonus' };
         });
       });
 

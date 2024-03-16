@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import getLetterPoints from '../../utils/getLetterPoints';
-import MakeDraggable from '../MakeDraggable';
+//import MakeDraggable from '../MakeDraggable';
 
 interface Props {
   letters: string[];
@@ -46,56 +46,56 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
     <div>
       {holderTiles.map((l) => (
         <>
-          <MakeDraggable key={l.letter + l.points}>
-            <div
-              style={{
-                position: 'relative',
-                display: 'inline-block',
-                margin: '5px',
+          {/* <MakeDraggable key={l.letter + l.points}> */}
+          <div
+            key={l.letter + l.points}
+            style={{
+              position: 'relative',
+              display: 'inline-block',
+              margin: '5px',
+            }}
+            className="tile"
+          >
+            <Button
+              key={l.letter}
+              sx={{
+                background: 'linear-gradient(180deg, #FEDA75 30%, #DB904A 90%)',
+                borderRadius: 3,
+                border: 0,
+                color: 'white',
+                width: '50px', // Set square dimensions
+                height: '55px', // Set square dimensions
+                fontSize: 'x-large',
+                fontWeight: 900,
+                boxShadow: '0px 8px 0px 0px #ac5942, 0px -1px 0px 0px #FFFFFF',
+                textShadow: '0px 0px 2px #CEAC68',
+                display: 'flex',
+                justifyContent: 'center', // Center content horizontally
+                alignItems: 'center', // Center content vertically
+                padding: 0, // Adjust padding as needed
               }}
-              className="tile"
+              onClick={() => onLetterSelect(l.letter)}
             >
-              <Button
-                key={l.letter}
-                sx={{
-                  background:
-                    'linear-gradient(180deg, #FEDA75 30%, #DB904A 90%)',
-                  borderRadius: 3,
-                  border: 0,
-                  color: 'white',
-                  width: '50px', // Set square dimensions
-                  height: '55px', // Set square dimensions
-                  fontSize: 'x-large',
-                  fontWeight: 900,
-                  boxShadow:
-                    '0px 8px 0px 0px #ac5942, 0px -1px 0px 0px #FFFFFF',
-                  textShadow: '0px 0px 2px #CEAC68',
-                  display: 'flex',
-                  justifyContent: 'center', // Center content horizontally
-                  alignItems: 'center', // Center content vertically
-                  padding: 0, // Adjust padding as needed
+              <span
+                style={{
+                  position: 'relative',
+                  top: '-2.5px',
                 }}
-                onClick={() => onLetterSelect(l.letter)}
               >
+                {l.letter}
                 <span
                   style={{
+                    fontSize: 'small',
                     position: 'relative',
-                    top: '-2.5px',
+                    top: '2px',
+                    right: '-2px',
                   }}
                 >
-                  {l.letter}
-                  <span
-                    style={{
-                      fontSize: 'small',
-                      position: 'relative',
-                      top: '2px',
-                      right: '-2px',
-                    }}
-                  >
-                    <sub>{l.points}</sub>
-                  </span>
+                  <sub>{l.points}</sub>
                 </span>
-              </Button>
+              </span>
+            </Button>
+            {l.available > 1 && (
               <span
                 style={{
                   fontSize: 'small',
@@ -114,8 +114,9 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
               >
                 <sub>{l.available}</sub>
               </span>
-            </div>
-          </MakeDraggable>
+            )}
+          </div>
+          {/* </MakeDraggable> */}
         </>
       ))}
     </div>
