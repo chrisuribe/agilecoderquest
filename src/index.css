@@ -1,3 +1,5 @@
+/* 
+Make these changes at the individual component level...
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -28,10 +30,37 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Set default font and background for the app */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Other global styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1.2rem;
+}
+
+a {
+  color: #00f;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
 }
