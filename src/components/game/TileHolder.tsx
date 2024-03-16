@@ -42,6 +42,14 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
 
   const holderTiles = lettersToHolderTiles(letters);
 
+  const soundUrl =
+    'src/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/448080__breviceps__wet-click.wav';
+
+  const playSound = () => {
+    const audio = new Audio(soundUrl);
+    audio.play();
+  };
+
   return (
     <div>
       {holderTiles.map((l) => (
@@ -74,7 +82,10 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
                 alignItems: 'center', // Center content vertically
                 padding: 0, // Adjust padding as needed
               }}
-              onClick={() => onLetterSelect(l.letter)}
+              onClick={() => {
+                onLetterSelect(l.letter);
+                playSound();
+              }}
             >
               <span
                 style={{

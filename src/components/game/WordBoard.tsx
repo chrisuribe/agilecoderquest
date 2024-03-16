@@ -33,8 +33,8 @@ const WordBoard = ({ words }: Props) => {
             gap: '10px',
           }}
         >
-          {column1Words.map((word) => (
-            <Word word={word}></Word>
+          {column1Words.map((word, index) => (
+            <Word word={word} key={index}></Word>
           ))}
         </div>
         <div
@@ -47,8 +47,8 @@ const WordBoard = ({ words }: Props) => {
             gap: '10px',
           }}
         >
-          {column2Words.map((word) => (
-            <Word word={word}></Word>
+          {column2Words.map((word, index) => (
+            <Word word={word} key={index}></Word>
           ))}
         </div>
       </div>
