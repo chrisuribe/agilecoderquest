@@ -1,14 +1,15 @@
 import './App.css';
-import Welcome from './components/Welcome';
-// import Footer from './components/Footer';
-// import GameArea from './components/game/GameArea';
+// import Welcome from './components/Welcome';
+import Footer from './components/Footer';
+import GameArea from './components/game/GameArea';
 
 function App() {
   return (
     <>
-      {/* <GameArea />
-      <Footer /> */}
-      <Welcome />
+      <GameArea />
+      <Footer />
+      {/*
+      <Welcome /> */}
     </>
   );
 }
