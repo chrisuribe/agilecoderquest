@@ -1,7 +1,30 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  ReactElement,
+  Ref,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { formatSeconds } from '../../utils';
 import PauseIcon from '@mui/icons-material/Pause';
 import ButtonGreen from '../ButtonGreen';
+
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import { TransitionProps } from '@mui/material/transitions';
+import { PlayArrow } from '@mui/icons-material';
+
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: ReactElement;
+  },
+  ref: Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 interface Props {
   // these are callback functions that will be called when time is up or when the pause button is pressed.
@@ -16,6 +39,7 @@ export type TimerHandle = {
 const Timer = forwardRef<TimerHandle, Props>(
   ({ timeIsUp, pausePressed }, ref) => {
     const [time, setSeconds] = useState(60 * 3); // 3 minutes
+    const [paused, setPaused] = useState(false);
 
     useEffect(() => {
       if (time === 0) {
@@ -23,10 +47,12 @@ const Timer = forwardRef<TimerHandle, Props>(
         return;
       }
       const intervalId = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
+        if (!paused) {
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        }
       }, 1000);
       return () => clearInterval(intervalId);
-    }, [time, timeIsUp]);
+    }, [paused, time, timeIsUp]);
 
     useImperativeHandle(ref, () => ({
       resetTimer() {
@@ -38,9 +64,12 @@ const Timer = forwardRef<TimerHandle, Props>(
     }));
 
     const handlePausePressed = () => {
-      const isRunning = false; // TODO: i just put false for now, but we need logic to tell if were running or not.... maybe a state variable that can tell if we're in the paused state or not? also is time > 0 ??? something like that.
-      pausePressed(isRunning);
-      //TODO: add logic to pause time and also
+      pausePressed(paused);
+      setPaused(true);
+    };
+
+    const handleClose = () => {
+      setPaused(false);
     };
 
     return (
@@ -58,6 +87,48 @@ const Timer = forwardRef<TimerHandle, Props>(
         <ButtonGreen onClick={handlePausePressed}>
           <PauseIcon fontSize="large" />
         </ButtonGreen>
+
+        <Dialog
+          open={paused}
+          TransitionComponent={Transition}
+          keepMounted
+          fullWidth
+          maxWidth="xl"
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+          sx={{
+            '& .MuiPaper-root': {
+              background:
+                'radial-gradient(60% 400px at 50% 60%, #841bad 5%, #371761 100%)',
+              width: '80%', // 90% of the viewport width
+              height: '80%', // 90% of the viewport height
+
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              maxWidth: 'none', // Override the maxWidth to make sure it can go up to 90%
+            },
+          }}
+        >
+          <div>
+            <DialogTitle
+              style={{
+                fontSize: 'x-large',
+                color: 'white',
+                fontWeight: 'bolder',
+                marginBottom: '15px',
+              }}
+            >
+              {'GAME PAUSED'}
+            </DialogTitle>
+            <DialogContent>
+              <ButtonGreen onClick={handleClose}>
+                Resume <PlayArrow />
+              </ButtonGreen>
+            </DialogContent>
+          </div>
+        </Dialog>
       </>
     );
   },
