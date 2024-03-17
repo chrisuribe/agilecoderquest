@@ -17,7 +17,10 @@ function App() {
         <Route path="/user" element={<UserPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/word-shuffle-world" element={<WordShuffleWorldPage />} />
+        <Route
+          path="/games/word-shuffle-world"
+          element={<WordShuffleWorldPage />}
+        />
       </Routes>
     </Router>
   );

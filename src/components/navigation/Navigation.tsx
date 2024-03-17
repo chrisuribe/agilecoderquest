@@ -21,7 +21,7 @@ const Navigation = () => {
       </Button>
       <Button
         component={Link}
-        to="/word-shuffle-world"
+        to="/games/word-shuffle-world"
         variant="contained"
         color="primary"
       >
