@@ -1,23 +1,33 @@
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   return (
-    <nav style={{ background: 'black' }}>
-      <ul>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/user">User Page</Link>
-        </li>
-        <li>
-          <Link to="/admin">Admin Page</Link>
-        </li>
-        <li>
-          <Link to="/word-shuffle-world">World Shuffle World</Link>
-        </li>
-      </ul>
-    </nav>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      }}
+    >
+      <Button component={Link} to="/login" variant="contained" color="primary">
+        Login
+      </Button>
+      <Button component={Link} to="/user" variant="contained" color="primary">
+        User Page
+      </Button>
+      <Button component={Link} to="/admin" variant="contained" color="primary">
+        Admin Page
+      </Button>
+      <Button
+        component={Link}
+        to="/word-shuffle-world"
+        variant="contained"
+        color="primary"
+      >
+        Word Shuffle World
+      </Button>
+    </div>
   );
 };
 
