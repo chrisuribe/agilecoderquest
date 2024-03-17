@@ -3,7 +3,7 @@ import Navigation from '../../components/navigation/Navigation';
 const HomePage = () => {
   return (
     <div>
-      Welcome to the homepage. Test 1
+      Welcome to the homepage.
       <Navigation />
     </div>
   );
