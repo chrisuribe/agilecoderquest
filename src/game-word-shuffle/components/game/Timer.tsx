@@ -14,19 +14,10 @@ import ButtonGreen from '../ButtonGreen';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
+
 import { PlayArrow } from '@mui/icons-material';
 import { GameContext } from './GameContext';
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement;
-  },
-  ref: Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import Transition from '../Transition';
 
 interface Props {
   // these are callback functions that will be called when time is up or when the pause button is pressed.
