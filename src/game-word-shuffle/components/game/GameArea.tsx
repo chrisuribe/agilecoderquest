@@ -7,7 +7,12 @@ import Information from './Information';
 import WordBoard from './WordBoard';
 
 import useWords from '../../hooks/useWords';
-import { getLetters, playSound, removeOneLetter } from '../../utils';
+import {
+  getLetters,
+  inputSoundUrl,
+  playSound,
+  removeOneLetter,
+} from '../../utils';
 import ReturnLetterButton from './ReturnButton';
 import Input from './Input/Input';
 import useKeyboardInput from './useKeyboardInput';
@@ -61,8 +66,14 @@ const GameArea = () => {
       setBoardLetters((boardLetters) => [...boardLetters, lastDisplayLetter]);
       // remove last letter from displayText
       setDisplayText(displayText.slice(0, displayText.length - 1));
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/450612__breviceps__reverse-blip.wav';
+        playSound(soundUrl);
+      }
     }
-  }, [displayText]);
+  }, [displayText, soundEnabled]);
 
   const handleAllLettersReturnButton = useCallback(() => {
     if (displayText.length !== 0) {
@@ -77,7 +88,7 @@ const GameArea = () => {
       // play sound
       if (soundEnabled) {
         const soundUrl =
-          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/445972__breviceps__click-cursor-sfx-scroll-through-files-folder-cabinet.wav';
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/450612__breviceps__reverse-blip.wav';
         playSound(soundUrl);
       }
     }
@@ -111,14 +122,32 @@ const GameArea = () => {
 
       // remove from displayText
       setDisplayText('');
+
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/452998__breviceps__blip-wave.wav';
+        playSound(soundUrl);
+      }
     } else {
       // TODO: turn display text red for 3 seconds and back and forth wiggle to say no.
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/445976__breviceps__error-signal-1.wav';
+        playSound(soundUrl);
+      }
     }
-  }, [boardWords, displayText, points]);
+  }, [boardWords, displayText, points, soundEnabled]);
 
   const handleOnLetterSelect = (letter: string): void => {
     setDisplayText((displayText) => displayText + letter);
     setBoardLetters(removeOneLetter(boardLetters, letter));
+
+    // play sound
+    if (soundEnabled) {
+      playSound(inputSoundUrl);
+    }
   };
 
   useKeyboardInput(
@@ -177,6 +206,10 @@ const GameArea = () => {
               console.log('Outta time!');
             }}
             pausePressed={function (isRunning: boolean): void {
+              // play sound
+              if (soundEnabled) {
+                playSound(inputSoundUrl);
+              }
               console.log(
                 'Pause button pressed! Is app currently running?',
                 isRunning,
