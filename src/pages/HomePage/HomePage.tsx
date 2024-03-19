@@ -73,6 +73,7 @@ function HomePage() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              alignContent: 'center',
             }}
           >
             {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -80,14 +81,14 @@ function HomePage() {
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
-            </Typography> */}
+            </Typography> 
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              {/* <TextField
+               <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -130,20 +131,12 @@ function HomePage() {
                     {"Don't have an account? Sign Up"}
                   </LinkMUI>
                 </Grid>
-              </Grid> */}
-              <Box
-                sx={{
-                  my: 8,
-                  mx: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <Navigation />
-                <Copyright />
+              </Grid> 
               </Box>
-            </Box>
+              */}
+
+            <Navigation />
+            <Copyright />
           </Box>
         </Grid>
       </Grid>

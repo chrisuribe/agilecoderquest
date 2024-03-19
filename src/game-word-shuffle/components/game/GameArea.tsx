@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Timer from './Timer';
 import Menu from './Menu';
 import { Clear } from '@mui/icons-material';
@@ -7,11 +7,17 @@ import Information from './Information';
 import WordBoard from './WordBoard';
 
 import useWords from '../../hooks/useWords';
-import { getLetters, removeOneLetter } from '../../utils';
+import {
+  getLetters,
+  inputSoundUrl,
+  playSound,
+  removeOneLetter,
+} from '../../utils';
 import ReturnLetterButton from './ReturnButton';
 import Input from './Input/Input';
 import useKeyboardInput from './useKeyboardInput';
 import getLetterPoints from '../../utils/getLetterPoints';
+import { GameContext, GameProvider } from './GameContext';
 
 const GameArea = () => {
   const { words, refreshWords } = useWords();
@@ -21,6 +27,8 @@ const GameArea = () => {
   const [percentComplete, setPercentComplete] = useState(0);
   const [points, setPoints] = useState(0);
   const [round, setRound] = useState(1);
+
+  const { soundEnabled } = useContext(GameContext);
 
   useEffect(() => {
     if (percentComplete === 0 || percentComplete === 100) {
@@ -58,8 +66,14 @@ const GameArea = () => {
       setBoardLetters((boardLetters) => [...boardLetters, lastDisplayLetter]);
       // remove last letter from displayText
       setDisplayText(displayText.slice(0, displayText.length - 1));
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/450612__breviceps__reverse-blip.wav';
+        playSound(soundUrl);
+      }
     }
-  }, [displayText]);
+  }, [displayText, soundEnabled]);
 
   const handleAllLettersReturnButton = useCallback(() => {
     if (displayText.length !== 0) {
@@ -70,8 +84,15 @@ const GameArea = () => {
       ]);
       // remove all displayText
       setDisplayText('');
+
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/450612__breviceps__reverse-blip.wav';
+        playSound(soundUrl);
+      }
     }
-  }, [displayText]);
+  }, [displayText, soundEnabled]);
 
   const handleWordEnterButton = useCallback(() => {
     const stringWordsFromBoardWords = boardWords.map((word) =>
@@ -101,14 +122,32 @@ const GameArea = () => {
 
       // remove from displayText
       setDisplayText('');
+
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/452998__breviceps__blip-wave.wav';
+        playSound(soundUrl);
+      }
     } else {
       // TODO: turn display text red for 3 seconds and back and forth wiggle to say no.
+      // play sound
+      if (soundEnabled) {
+        const soundUrl =
+          '/src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/445976__breviceps__error-signal-1.wav';
+        playSound(soundUrl);
+      }
     }
-  }, [boardWords, displayText, points]);
+  }, [boardWords, displayText, points, soundEnabled]);
 
   const handleOnLetterSelect = (letter: string): void => {
     setDisplayText((displayText) => displayText + letter);
     setBoardLetters(removeOneLetter(boardLetters, letter));
+
+    // play sound
+    if (soundEnabled) {
+      playSound(inputSoundUrl);
+    }
   };
 
   useKeyboardInput(
@@ -119,115 +158,121 @@ const GameArea = () => {
   );
 
   return (
-    <div
-      style={{
-        height: '97vh',
-        display: 'flex',
-        fontFamily: 'arial, sans-serif',
-        backgroundImage:
-          'radial-gradient(60% 400px at 50% 60%,#841bad 5%,#371761 100%)',
-        perspective: '500px',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      {/* HEADER AREA - This is the area where the menu, round, score, and coundown timer component will go */}
+    <GameProvider>
       <div
         style={{
+          height: '97vh',
           display: 'flex',
-          justifyContent: 'space-around',
+          fontFamily: 'arial, sans-serif',
+          backgroundImage:
+            'radial-gradient(60% 400px at 50% 60%,#841bad 5%,#371761 100%)',
+          perspective: '500px',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          width: '90%',
-          margin: '20px',
         }}
       >
-        <Menu />
-        <div
-          style={{
-            fontSize: 'x-large',
-            color: 'white',
-            fontWeight: 'bolder',
-          }}
-        >
-          Round: <span style={{ color: 'orange' }}>{round}</span>
-        </div>
-        <div
-          style={{
-            fontSize: 'x-large',
-            color: 'white',
-            fontWeight: 'bolder',
-          }}
-        >
-          Score: <span style={{ color: 'orange' }}>{points}</span>
-        </div>
-        <Timer
-          timeIsUp={function (): void {
-            console.log('Outta time!');
-          }}
-          pausePressed={function (isRunning: boolean): void {
-            console.log(
-              'Pause button pressed! Is app currently running?',
-              isRunning,
-            );
-          }}
-        ></Timer>
-      </div>
-
-      <WordBoard words={boardWords} />
-
-      <Information progress={percentComplete} />
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          width: '100%',
-        }}
-      >
+        {/* HEADER AREA - This is the area where the menu, round, score, and coundown timer component will go */}
         <div
           style={{
             display: 'flex',
+            justifyContent: 'space-around',
             alignItems: 'center',
+            width: '90%',
+            margin: '20px',
           }}
         >
-          <ButtonGreen onClick={handleAllLettersReturnButton}>
-            <Clear fontSize="large" />
-          </ButtonGreen>
+          <Menu />
+          <div
+            style={{
+              fontSize: 'x-large',
+              color: 'white',
+              fontWeight: 'bolder',
+            }}
+          >
+            Round: <span style={{ color: 'orange' }}>{round}</span>
+          </div>
+          <div
+            style={{
+              fontSize: 'x-large',
+              color: 'white',
+              fontWeight: 'bolder',
+            }}
+          >
+            Score: <span style={{ color: 'orange' }}>{points}</span>
+          </div>
+          <Timer
+            timeIsUp={function (): void {
+              console.log('Outta time!');
+            }}
+            pausePressed={function (isRunning: boolean): void {
+              // play sound
+              if (soundEnabled) {
+                playSound(inputSoundUrl);
+              }
+              console.log(
+                'Pause button pressed! Is app currently running?',
+                isRunning,
+              );
+            }}
+          ></Timer>
         </div>
 
-        <div
-          style={{
-            backgroundColor: '#23004c',
-            borderRadius: '5px',
-            padding: '20px',
-            fontWeight: '900',
-            fontSize: 'xx-large',
-            margin: '10px',
-            color: 'aliceblue',
-            fontFamily: 'Arial, Helvetica, sans-serif',
-            textAlign: 'center',
-            width: '50vw',
-          }}
-        >
-          {displayText}
-        </div>
+        <WordBoard words={boardWords} />
+
+        <Information progress={percentComplete} />
+
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            justifyContent: 'space-around',
+            width: '100%',
           }}
         >
-          <ReturnLetterButton onClick={handleLetterReturnButton} />
-        </div>
-      </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <ButtonGreen onClick={handleAllLettersReturnButton}>
+              <Clear fontSize="large" />
+            </ButtonGreen>
+          </div>
 
-      <Input
-        handleWordEnterButton={handleWordEnterButton}
-        boardLetters={boardLetters}
-        handleOnLetterSelect={handleOnLetterSelect}
-      />
-    </div>
+          <div
+            style={{
+              backgroundColor: '#23004c',
+              borderRadius: '5px',
+              padding: '20px',
+              fontWeight: '900',
+              fontSize: 'xx-large',
+              margin: '10px',
+              color: 'aliceblue',
+              fontFamily: 'Arial, Helvetica, sans-serif',
+              textAlign: 'center',
+              width: '50vw',
+            }}
+          >
+            {displayText}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <ReturnLetterButton onClick={handleLetterReturnButton} />
+          </div>
+        </div>
+
+        <Input
+          handleWordEnterButton={handleWordEnterButton}
+          boardLetters={boardLetters}
+          handleOnLetterSelect={handleOnLetterSelect}
+        />
+      </div>
+    </GameProvider>
   );
 };
 

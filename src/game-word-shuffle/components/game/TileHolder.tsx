@@ -1,5 +1,7 @@
 import { Button } from '@mui/material';
 import getLetterPoints from '../../utils/getLetterPoints';
+import { useCallback } from 'react';
+
 //import MakeDraggable from '../MakeDraggable';
 
 interface Props {
@@ -42,13 +44,12 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
 
   const holderTiles = lettersToHolderTiles(letters);
 
-  const soundUrl =
-    'src/game-word-shuffle/sounds/sound-effects/25371__breviceps__clicks-buttons-ui-sounds/448080__breviceps__wet-click.wav';
-
-  const playSound = () => {
-    const audio = new Audio(soundUrl);
-    audio.play();
-  };
+  const handleTileClick = useCallback(
+    (letter: string) => {
+      onLetterSelect(letter);
+    },
+    [onLetterSelect],
+  );
 
   return (
     <div>
@@ -82,10 +83,7 @@ const TileHolder = ({ letters, onLetterSelect }: Props) => {
                 alignItems: 'center', // Center content vertically
                 padding: 0, // Adjust padding as needed
               }}
-              onClick={() => {
-                onLetterSelect(l.letter);
-                playSound();
-              }}
+              onClick={() => handleTileClick(l.letter)}
             >
               <span
                 style={{
