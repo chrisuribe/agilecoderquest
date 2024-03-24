@@ -1,6 +1,22 @@
 import './login.css';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { auth } from '../../firebase-config';
 
 function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+  const signIn = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential)
+    }).catch((error) => {
+      console.log(error)
+    })
+  };
+
   return (
     <>
       <div className="main-container">
@@ -20,12 +36,14 @@ function Login() {
 
             <div className="_or">or</div>
 
-            <form action="" className="the-form">
+            <form onSubmit={signIn} className="the-form">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 name="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
               ></input>
 
@@ -34,6 +52,8 @@ function Login() {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
               ></input>
 
