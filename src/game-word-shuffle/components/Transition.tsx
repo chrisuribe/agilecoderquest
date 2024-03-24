@@ -1,6 +1,6 @@
 import { Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { ReactElement, forwardRef } from 'react';
+import { ReactElement, Ref, forwardRef } from 'react';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
