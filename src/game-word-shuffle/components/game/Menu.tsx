@@ -1,20 +1,14 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import ButtonGreen from '../ButtonGreen';
 import Transition from '../Transition';
-import {
-  PlayArrow,
-  Speaker,
-  VolumeDown,
-  VolumeOff,
-  VolumeUp,
-} from '@mui/icons-material';
+import { VolumeOff, VolumeUp } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { GameContext } from './GameContext';
 import { inputSoundUrl, playSound } from '../../utils';
 
 const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { soundEnabled, setSoundEnabled } = useContext(GameContext);
+  const { soundEnabled } = useContext(GameContext);
 
   const handleClose = () => {
     setMenuOpen(false);
