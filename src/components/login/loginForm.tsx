@@ -1,73 +1,122 @@
-import './login.css';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
 import { auth } from '../../firebase-config';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+      https://agilecoderquest.chrisuribe.com/
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-  const signIn = (e: { preventDefault: () => void; }) => {
+  const signIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const email = data.get('email');
+    const password = data.get('password');
+
+if (typeof email === 'string' && typeof password === 'string') {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      console.log(userCredential)
+      const user = userCredential.user;
+      console.log('User logged in:', user);
     }).catch((error) => {
-      console.log(error)
-    })
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error loggin in:', errorCode, errorMessage);
+    });
+  }
   };
+
+const defaultTheme = createTheme();
 
   return (
     <>
-      <div className="main-container">
-        <div className="form-container">
-          <div className="form-body">
-            <h2 className="title">Log in with</h2>
-            <div className="social-login">
-              <ul>
-                <li className="google">
-                  <a href="#">Google</a>
-                </li>
-                <li className="fb">
-                  <a href="#">Facebook</a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="_or">or</div>
-
-            <form onSubmit={signIn} className="the-form">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
+      <ThemeProvider theme={defaultTheme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box 
+            sx={{
+              margintTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+              <Avatar sx={{ m: 1, bgcolor: 'secondary.main'}}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component = "h1" variant = "h5">Sign In</Typography>
+          
+            <Box component="form" onSubmit={signIn} noValidate sx={{ mt: 1 }}>
+              <TextField 
+                margin="normal"
+                required
+                fullWidth
                 id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-              ></input>
-
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
+                type="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus 
+              />
+              <TextField 
+                margin="normal"
+                required
+                fullWidth
                 name="password"
+                label="Password"
+                type="password"
                 id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              ></input>
-
-              <input type="submit" value="Log In"></input>
-            </form>
-          </div>
-
-          <div className="form-footer">
-            <div>
-              <span>Don't have an account?</span> <a href="">Sign Up</a>
-            </div>
-          </div>
-        </div>
-      </div>
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me" 
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
     </>
   );
 }
