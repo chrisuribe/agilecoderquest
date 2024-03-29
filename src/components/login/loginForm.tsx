@@ -30,6 +30,7 @@ function Copyright(props: any) {
 function Login() {
   const signIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     const data = new FormData(e.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
@@ -37,9 +38,11 @@ function Login() {
 if (typeof email === 'string' && typeof password === 'string') {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      form.reset();
       const user = userCredential.user;
       console.log('User logged in:', user);
     }).catch((error) => {
+      form.reset();
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error('Error loggin in:', errorCode, errorMessage);
