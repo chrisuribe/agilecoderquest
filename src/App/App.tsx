@@ -7,7 +7,7 @@ import AdminPage from '../pages/AdminPage/AdminPage';
 import HomePage from '../pages/HomePage/HomePage';
 import WordShuffleWorldPage from '../pages/WordShuffleWorldPage/WordShuffleWorldPage';
 import AboutPage from '../pages/AboutPage/AboutPage';
-
+import DbFinder from '../pages/DbFinder/DbFinder';
 function App() {
   return (
     <Router>
@@ -21,6 +21,7 @@ function App() {
           path="/games/word-shuffle-world"
           element={<WordShuffleWorldPage />}
         />
+        <Route path="/dbfinder" element={<DbFinder />}/>
       </Routes>
     </Router>
   );
