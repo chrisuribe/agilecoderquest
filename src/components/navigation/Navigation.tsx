@@ -27,6 +27,9 @@ const Navigation = () => {
       >
         Word Shuffle World
       </Button>
+      <Button component={Link} to="/dbfinder" variant="contained" color="primary">
+        Db Finder
+      </Button>
     </div>
   );
 };
