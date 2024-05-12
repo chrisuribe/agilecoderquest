@@ -35,10 +35,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchView }) => {
     setSnackbarOpen(true);
   };
 
-  const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
+  const handleSnackbarClose = (reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
